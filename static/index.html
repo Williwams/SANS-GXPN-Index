@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GXPN Study Index</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header>
+  <img src="/logo.png" alt="" class="logo">
+  <h1>GXPN Study Index</h1>
+  <div class="stats" id="stats">0 entries &middot; 0 concepts</div>
+</header>
+
+<main>
+  <section class="panel form-panel">
+    <h2 id="form-title">Add entry</h2>
+    <form id="entry-form" autocomplete="off">
+      <input type="hidden" id="entry-id" value="">
+
+      <label for="concept">Concept <span class="req">*</span></label>
+      <div class="ac-wrap">
+        <input type="text" id="concept" placeholder="e.g. Stack canaries" required>
+        <div class="ac-list" id="concept-suggestions"></div>
+      </div>
+
+      <label for="subconcept">Sub-concept <span class="hint">(optional, second level)</span></label>
+      <div class="ac-wrap">
+        <input type="text" id="subconcept" placeholder="e.g. Bypassing on Linux x86_64">
+        <div class="ac-list" id="subconcept-suggestions"></div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <label for="book">
+            Book / Source <span class="req hidden" id="book-req">*</span>
+            <button type="button" id="manage-sources-btn" class="link-btn">manage list</button>
+          </label>
+          <div class="ac-wrap combo">
+            <input type="text" id="book" placeholder="Pick from your source list" autocomplete="off">
+            <div class="ac-list" id="book-suggestions"></div>
+          </div>
+          <div id="book-error" class="field-error hidden"></div>
+          <div id="sources-manager" class="sources-manager hidden">
+            <div class="sources-list" id="sources-list"></div>
+            <div class="sources-add-row">
+              <input type="text" id="new-source-input" placeholder="Add a source, e.g. SEC660 Book 4">
+              <button type="button" id="add-source-btn" class="secondary small">Add</button>
+            </div>
+          </div>
+        </div>
+        <div class="col col-narrow">
+          <label for="page">Page</label>
+          <input type="text" id="page" placeholder="e.g. 214">
+        </div>
+      </div>
+
+      <label for="notes">Notes</label>
+      <textarea id="notes" rows="4" placeholder="What's on this page, why it matters, exam tip..."></textarea>
+
+      <div id="dup-warning" class="dup-warning hidden"></div>
+
+      <div class="actions">
+        <button type="submit" id="submit-btn">Add entry</button>
+        <button type="button" id="cancel-edit-btn" class="secondary hidden">Cancel edit</button>
+      </div>
+    </form>
+
+    <div class="existing-panel" id="existing-panel">
+      <h3>Existing for this concept</h3>
+      <div id="existing-list" class="existing-list muted">Start typing a concept above.</div>
+    </div>
+  </section>
+
+  <section class="panel table-panel">
+    <div class="table-header">
+      <div class="tabs">
+        <button type="button" class="tab-btn active" id="tab-btn-table" data-tab="table">All entries</button>
+        <button type="button" class="tab-btn" id="tab-btn-markdown" data-tab="markdown">Markdown index</button>
+        <button type="button" class="tab-btn" id="tab-btn-printable" data-tab="printable">Printable</button>
+      </div>
+      <input type="search" id="search" placeholder="Filter by concept, sub-concept, book, page, notes...">
+    </div>
+
+    <div class="tab-pane" id="tab-table">
+      <div class="table-wrap">
+        <table id="entries-table">
+          <thead>
+            <tr>
+              <th>Concept</th>
+              <th>Sub-concept</th>
+              <th>Book</th>
+              <th>Page</th>
+              <th>Notes</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="entries-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="tab-pane hidden" id="tab-markdown">
+      <div class="markdown-wrap">
+        <div id="markdown-render" class="markdown-render"></div>
+      </div>
+    </div>
+
+    <div class="tab-pane hidden" id="tab-printable">
+      <div class="print-controls no-print">
+        <div class="tabs">
+          <button type="button" class="tab-btn active" id="print-view-full" data-printview="full">Full (with notes)</button>
+          <button type="button" class="tab-btn" id="print-view-simple" data-printview="simple">Simple (concept &rarr; location)</button>
+        </div>
+        <div class="print-actions">
+          <button type="button" id="download-pdf-btn">Download PDF (Full + Simple)</button>
+          <button type="button" id="print-btn" class="secondary">Print this view (browser)</button>
+        </div>
+      </div>
+      <div class="printable-wrap">
+        <div id="printable-content" class="printable-area"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<section class="danger-zone">
+  <div class="danger-zone-inner">
+    <div class="danger-copy">
+      <h3>Danger zone</h3>
+      <p>Permanently deletes every entry in <code>data/index.csv</code>. Your Book/Source list is not affected.</p>
+    </div>
+    <button type="button" id="clear-all-btn" class="danger">Clear all entries&hellip;</button>
+  </div>
+  <div class="danger-confirm hidden" id="clear-all-confirm">
+    <p>Type <strong id="clear-all-phrase">CLEAR ALL</strong> to permanently delete all entries. This can't be undone.</p>
+    <div class="danger-confirm-row">
+      <input type="text" id="clear-all-input" placeholder="Type CLEAR ALL" autocomplete="off">
+      <button type="button" id="clear-all-confirm-btn" class="danger" disabled>Confirm delete</button>
+      <button type="button" id="clear-all-cancel-btn" class="secondary">Cancel</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Data saved to <code>data/index.csv</code> &middot; formatted view regenerated at <code>INDEX.md</code> on every change.
+</footer>
+
+<script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+data/
+INDEX.md
+__pycache__/
+*.pyc
+*.docx
