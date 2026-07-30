@@ -141,6 +141,24 @@
       { showAllIfEmpty: true }
     );
 
+    // Bulk field: suggest sub-concepts already used by the concepts in the selection
+    // (falling back to every sub-concept, e.g. before anything is selected).
+    wireAutocomplete(
+      $("bulk-subconcept"),
+      $("bulk-suggestions"),
+      () => {
+        const conceptsInSelection = new Set(
+          entries.filter((e) => selectedIds.has(e.id)).map((e) => e.concept)
+        );
+        const pool = conceptsInSelection.size
+          ? [...conceptsInSelection].flatMap((c) => meta.subconceptsByConcept[c] || [])
+          : Object.values(meta.subconceptsByConcept).flat();
+        return { list: [...new Set(pool)].sort((a, b) => a.localeCompare(b)), getName: (s) => s, getMeta: () => "" };
+      },
+      (name) => { $("bulk-subconcept").value = name; },
+      { showAllIfEmpty: true }
+    );
+
     conceptInput.addEventListener("input", () => renderExistingForConcept(conceptInput.value));
   }
 
@@ -186,6 +204,11 @@
     entries = await entriesRes.json();
     meta = await metaRes.json();
     sources = (await sourcesRes.json()).sources || [];
+    // Drop selections and open panels whose entries no longer exist (deleted, cleared, ...)
+    const liveIds = new Set(entries.map((e) => e.id));
+    for (const id of [...selectedIds]) if (!liveIds.has(id)) selectedIds.delete(id);
+    for (const id of [...expandedRows]) if (!liveIds.has(id)) expandedRows.delete(id);
+    rebuildSiblingIndex();
     renderTable();
     renderStats();
     renderSourcesList();
@@ -487,7 +510,211 @@
     $("stats").textContent = `${entries.length} entries · ${meta.concepts.length} concepts`;
   }
 
+  // ---------- table sorting ----------
+  // Columns the user hasn't explicitly picked still break ties, in this order, so
+  // sorting by Book alone reads as book-then-page (i.e. reading order through a book)
+  // and the default single "Concept" key reproduces the server's own ordering.
+  const TIEBREAK = ["book", "page", "concept", "subconcept"];
+  const COL_LABELS = {
+    concept: "Concept", subconcept: "Sub-concept", book: "Book", page: "Page", notes: "Notes",
+  };
+  const DEFAULT_SORT = [{ key: "concept", dir: 1 }];
+  let sortKeys = DEFAULT_SORT.map((s) => ({ ...s }));
+
+  function cmpText(a, b) {
+    const la = (a || "").toLowerCase(), lb = (b || "").toLowerCase();
+    return la < lb ? -1 : la > lb ? 1 : 0;
+  }
+
+  // Same rule as natural_sort_key() in server.py: leading numbers sort numerically
+  // and ahead of non-numeric values, so 9 < 10 and "141-142" sits after "129".
+  function cmpNatural(a, b) {
+    const ma = /^\s*(\d+)/.exec(a || ""), mb = /^\s*(\d+)/.exec(b || "");
+    if (ma && mb) {
+      const diff = parseInt(ma[1], 10) - parseInt(mb[1], 10);
+      return diff !== 0 ? diff : cmpText(a, b);
+    }
+    if (ma) return -1;
+    if (mb) return 1;
+    return cmpText(a, b);
+  }
+
+  function effectiveSortKeys() {
+    const used = new Set(sortKeys.map((s) => s.key));
+    return [...sortKeys, ...TIEBREAK.filter((k) => !used.has(k)).map((k) => ({ key: k, dir: 1 }))];
+  }
+
+  function sortForTable(list) {
+    const keys = effectiveSortKeys();
+    return [...list].sort((a, b) => {
+      for (const { key, dir } of keys) {
+        const isNumericish = key === "book" || key === "page";
+        const c = isNumericish ? cmpNatural(a[key], b[key]) : cmpText(a[key], b[key]);
+        if (c !== 0) return c * dir;
+      }
+      return 0;
+    });
+  }
+
+  function isDefaultSort() {
+    return (
+      sortKeys.length === DEFAULT_SORT.length &&
+      sortKeys.every((s, i) => s.key === DEFAULT_SORT[i].key && s.dir === DEFAULT_SORT[i].dir)
+    );
+  }
+
+  function toggleSort(key, additive) {
+    const existing = sortKeys.find((s) => s.key === key);
+    if (additive) {
+      if (existing) existing.dir *= -1;
+      else sortKeys.push({ key, dir: 1 });
+    } else if (existing && sortKeys.length === 1) {
+      existing.dir *= -1;
+    } else {
+      sortKeys = [{ key, dir: 1 }];
+    }
+    renderTable();
+  }
+
+  function renderSortUI() {
+    for (const th of document.querySelectorAll("th.sortable")) {
+      const idx = sortKeys.findIndex((s) => s.key === th.dataset.sort);
+      const ind = th.querySelector(".sort-ind");
+      th.classList.toggle("sorted", idx >= 0);
+      if (idx < 0) {
+        ind.textContent = "";
+        th.removeAttribute("aria-sort");
+        continue;
+      }
+      const asc = sortKeys[idx].dir > 0;
+      ind.textContent = (asc ? "▲" : "▼") + (sortKeys.length > 1 ? String(idx + 1) : "");
+      th.setAttribute("aria-sort", asc ? "ascending" : "descending");
+    }
+    const chain = sortKeys.map((s) => `${COL_LABELS[s.key]} ${s.dir > 0 ? "↑" : "↓"}`).join(" → ");
+    $("sort-status").innerHTML =
+      `Sorted by <strong>${escapeHtml(chain)}</strong>` +
+      ` <span class="muted">· shift-click a header to sort by more than one column</span>` +
+      (isDefaultSort() ? "" : ` <button type="button" class="link-btn" data-action="reset-sort">reset</button>`);
+  }
+
+  document.querySelector("#entries-table thead").addEventListener("click", (ev) => {
+    const th = ev.target.closest("th.sortable");
+    if (!th) return;
+    toggleSort(th.dataset.sort, ev.shiftKey);
+  });
+
+  $("sort-status").addEventListener("click", (ev) => {
+    if (!ev.target.closest('[data-action="reset-sort"]')) return;
+    sortKeys = DEFAULT_SORT.map((s) => ({ ...s }));
+    renderTable();
+  });
+
   // ---------- table ----------
+  let visible = [];      // filtered + sorted: every entry the filter admits
+  let renderedIds = [];  // main entry rows on screen, in order (for shift-click ranges)
+  const expandedRows = new Set(); // ids whose "other references" panel is open
+
+  // Every reference for a concept, always book → page regardless of the table's sort,
+  // and drawn from all entries rather than the filtered set — the point is to see
+  // every place the concept turns up, including ones the current filter hides.
+  // Indexed once per load: a row's expander needs the count, so this is hot.
+  let siblingIndex = new Map();
+
+  function rebuildSiblingIndex() {
+    siblingIndex = new Map();
+    for (const e of entries) {
+      if (!siblingIndex.has(e.concept)) siblingIndex.set(e.concept, []);
+      siblingIndex.get(e.concept).push(e);
+    }
+    for (const list of siblingIndex.values()) {
+      list.sort((a, b) => cmpNatural(a.book, b.book) || cmpNatural(a.page, b.page));
+    }
+  }
+
+  function siblingsOf(concept) {
+    return siblingIndex.get(concept) || [];
+  }
+
+  function entryRow(e) {
+    const count = siblingsOf(e.concept).length;
+    const open = expandedRows.has(e.id);
+    const tr = document.createElement("tr");
+    if (selectedIds.has(e.id)) tr.className = "row-selected";
+    tr.innerHTML = `
+      <td class="select-col">
+        <input type="checkbox" data-select-id="${e.id}"${selectedIds.has(e.id) ? " checked" : ""}>
+      </td>
+      <td class="concept-cell">
+        <button type="button" class="sib-toggle${open ? " open" : ""}" data-siblings="${e.id}"
+                title="Show every reference for this concept, with its sub-concept">
+          <span class="caret">${open ? "▾" : "▸"}</span>${count}
+        </button>
+        ${escapeHtml(e.concept)}
+      </td>
+      <td>${escapeHtml(e.subconcept)}</td>
+      <td>${escapeHtml(e.book)}</td>
+      <td>${escapeHtml(e.page)}</td>
+      <td class="notes-cell">${escapeHtml(e.notes)}</td>
+      <td class="actions-cell">
+        <button type="button" class="secondary small" data-action="edit" data-id="${e.id}">Edit</button>
+        <button type="button" class="danger small" data-action="delete" data-id="${e.id}">Delete</button>
+      </td>
+    `;
+    return tr;
+  }
+
+  function subconceptTally(sibs) {
+    const counts = new Map();
+    let unlabelled = 0;
+    for (const s of sibs) {
+      const sub = (s.subconcept || "").trim();
+      if (!sub) unlabelled++;
+      else counts.set(sub, (counts.get(sub) || 0) + 1);
+    }
+    const parts = [...counts.entries()]
+      .sort((a, b) => b[1] - a[1] || cmpText(a[0], b[0]))
+      .map(([sub, n]) => `<span class="sib-chip">${escapeHtml(sub)} <b>${n}</b></span>`);
+    if (unlabelled) parts.push(`<span class="sib-chip muted">unlabelled <b>${unlabelled}</b></span>`);
+    return parts.join(" ");
+  }
+
+  function siblingPanel(e) {
+    const sibs = siblingsOf(e.concept);
+    const tr = document.createElement("tr");
+    tr.className = "sibling-panel";
+    tr.dataset.panelFor = e.id;
+    const rows = sibs
+      .map((s) => {
+        const sub = (s.subconcept || "").trim();
+        return `
+          <tr class="${s.id === e.id ? "is-current" : ""}${selectedIds.has(s.id) ? " row-selected" : ""}">
+            <td class="sib-ref">${escapeHtml(refString(s) || "—")}${
+              s.id === e.id ? '<span class="sib-here">this row</span>' : ""
+            }</td>
+            <td class="sib-sub">${sub ? escapeHtml(sub) : '<span class="muted">— no sub-concept</span>'}</td>
+            <td class="sib-note">${escapeHtml(s.notes || "")}</td>
+            <td class="sib-actions">
+              <button type="button" class="secondary small" data-action="edit" data-id="${s.id}">Edit</button>
+              <button type="button" class="danger small" data-action="delete" data-id="${s.id}">Exclude</button>
+            </td>
+          </tr>`;
+      })
+      .join("");
+    tr.innerHTML = `
+      <td></td>
+      <td colspan="6" class="sib-cell">
+        <div class="sib-head">
+          <strong>${sibs.length} reference${sibs.length === 1 ? "" : "s"}</strong>
+          for ${escapeHtml(e.concept)} <span class="muted">· book → page</span>
+          <button type="button" class="link-btn" data-select-concept="${escapeHtml(e.concept)}">select all for labelling</button>
+        </div>
+        <div class="sib-subs">${subconceptTally(sibs) || '<span class="muted">no sub-concepts yet</span>'}</div>
+        <table class="sib-table"><tbody>${rows}</tbody></table>
+      </td>
+    `;
+    return tr;
+  }
+
   function renderTable() {
     const q = searchInput.value.trim().toLowerCase();
     const body = $("entries-body");
@@ -497,29 +724,127 @@
       return [e.concept, e.subconcept, e.book, e.page, e.notes]
         .some((v) => (v || "").toLowerCase().includes(q));
     });
-    for (const e of filtered) {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td>${escapeHtml(e.concept)}</td>
-        <td>${escapeHtml(e.subconcept)}</td>
-        <td>${escapeHtml(e.book)}</td>
-        <td>${escapeHtml(e.page)}</td>
-        <td class="notes-cell">${escapeHtml(e.notes)}</td>
-        <td class="actions-cell">
-          <button type="button" class="secondary small" data-action="edit" data-id="${e.id}">Edit</button>
-          <button type="button" class="danger small" data-action="delete" data-id="${e.id}">Delete</button>
-        </td>
-      `;
-      body.appendChild(tr);
+    visible = sortForTable(filtered);
+    renderedIds = [];
+    for (const e of visible) {
+      body.appendChild(entryRow(e));
+      renderedIds.push(e.id);
+      if (expandedRows.has(e.id)) body.appendChild(siblingPanel(e));
     }
+    renderSortUI();
+    renderSelectionUI();
   }
 
   $("entries-body").addEventListener("click", (e) => {
+    const box = e.target.closest("input[data-select-id]");
+    if (box) {
+      handleRowCheckbox(box.dataset.selectId, box.checked, e.shiftKey);
+      return;
+    }
+    const sib = e.target.closest("button[data-siblings]");
+    if (sib) {
+      const id = sib.dataset.siblings;
+      if (expandedRows.has(id)) expandedRows.delete(id);
+      else expandedRows.add(id);
+      renderTable();
+      return;
+    }
+    const selectConcept = e.target.closest("[data-select-concept]");
+    if (selectConcept) {
+      for (const s of siblingsOf(selectConcept.dataset.selectConcept)) selectedIds.add(s.id);
+      lastToggledId = null;
+      renderTable();
+      return;
+    }
     const btn = e.target.closest("button[data-action]");
     if (!btn) return;
     const id = btn.dataset.id;
     if (btn.dataset.action === "edit") startEdit(id);
     else if (btn.dataset.action === "delete") deleteEntry(id);
+  });
+
+  $("collapse-panels-btn").addEventListener("click", () => {
+    expandedRows.clear();
+    renderTable();
+  });
+
+  // ---------- bulk sub-concept assignment ----------
+  const selectedIds = new Set();
+  let lastToggledId = null;
+  const bulkBar = $("bulk-bar");
+  const bulkInput = $("bulk-subconcept");
+  const selectAllBox = $("select-all");
+
+  function handleRowCheckbox(id, checked, shiftKey) {
+    // Shift-click paints the whole run since the last click — the point of the
+    // feature, when a block of consecutive pages shares one sub-concept.
+    let ids = [id];
+    if (shiftKey && lastToggledId && lastToggledId !== id) {
+      // Range walks the rows actually on screen, so a collapsed group is never
+      // caught in a shift-click the user can't see.
+      const from = renderedIds.indexOf(lastToggledId), to = renderedIds.indexOf(id);
+      if (from !== -1 && to !== -1) {
+        ids = renderedIds.slice(Math.min(from, to), Math.max(from, to) + 1);
+      }
+    }
+    for (const each of ids) {
+      if (checked) selectedIds.add(each);
+      else selectedIds.delete(each);
+    }
+    lastToggledId = id;
+    renderTable();
+  }
+
+  selectAllBox.addEventListener("change", () => {
+    for (const e of visible) {
+      if (selectAllBox.checked) selectedIds.add(e.id);
+      else selectedIds.delete(e.id);
+    }
+    lastToggledId = null;
+    renderTable();
+  });
+
+  function renderSelectionUI() {
+    const openPanels = expandedRows.size;
+    $("collapse-panels-btn").classList.toggle("hidden", openPanels === 0);
+    $("collapse-panels-btn").textContent = `collapse ${openPanels} open list${openPanels === 1 ? "" : "s"}`;
+    const n = selectedIds.size;
+    bulkBar.classList.toggle("hidden", n === 0);
+    $("bulk-count").textContent = `${n} selected`;
+    const shown = visible.length;
+    const shownSelected = visible.filter((e) => selectedIds.has(e.id)).length;
+    selectAllBox.checked = shown > 0 && shownSelected === shown;
+    selectAllBox.indeterminate = shownSelected > 0 && shownSelected < shown;
+  }
+
+  function clearSelection() {
+    selectedIds.clear();
+    lastToggledId = null;
+    bulkInput.value = "";
+    renderTable();
+  }
+
+  $("bulk-cancel-btn").addEventListener("click", clearSelection);
+
+  $("bulk-apply-btn").addEventListener("click", async () => {
+    if (!selectedIds.size) return;
+    const subconcept = bulkInput.value.trim();
+    const ids = [...selectedIds];
+    if (!subconcept && !confirm(`Remove the sub-concept from ${ids.length} selected entr${ids.length === 1 ? "y" : "ies"}?`)) {
+      return;
+    }
+    const res = await fetch("/api/entries/subconcept", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ids, subconcept }),
+    });
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      alert(data.error || "Something went wrong updating the selected entries.");
+      return;
+    }
+    clearSelection();
+    await loadAll();
   });
 
   function startEdit(id) {
@@ -560,7 +885,12 @@
 
   async function deleteEntry(id) {
     const entry = entries.find((e) => e.id === id);
-    const label = entry ? `"${entry.concept}"${entry.subconcept ? " / " + entry.subconcept : ""}` : "this entry";
+    // Name the reference, not just the concept: deletions also come from the
+    // sibling panel, where every row shares the same concept.
+    const ref = entry ? refString(entry) : "";
+    const label = entry
+      ? `"${entry.concept}"${entry.subconcept ? " / " + entry.subconcept : ""}${ref ? ` at ${ref}` : ""}`
+      : "this entry";
     if (!confirm(`Delete ${label}?`)) return;
     const res = await fetch(`/api/entries/${id}`, { method: "DELETE" });
     if (res.ok) {

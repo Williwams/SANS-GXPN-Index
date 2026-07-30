@@ -85,15 +85,33 @@
     </div>
 
     <div class="tab-pane" id="tab-table">
+      <div class="table-toolbar">
+        <div class="toolbar-left">
+          <div class="sort-status" id="sort-status"></div>
+          <button type="button" class="link-btn hidden" id="collapse-panels-btn"></button>
+        </div>
+        <div class="bulk-bar hidden" id="bulk-bar">
+          <span class="bulk-count" id="bulk-count">0 selected</span>
+          <div class="ac-wrap">
+            <input type="text" id="bulk-subconcept" placeholder="Sub-concept for selected rows" autocomplete="off">
+            <div class="ac-list" id="bulk-suggestions"></div>
+          </div>
+          <button type="button" id="bulk-apply-btn" class="small">Apply to selected</button>
+          <button type="button" id="bulk-cancel-btn" class="secondary small">Clear selection</button>
+        </div>
+      </div>
       <div class="table-wrap">
         <table id="entries-table">
           <thead>
             <tr>
-              <th>Concept</th>
-              <th>Sub-concept</th>
-              <th>Book</th>
-              <th>Page</th>
-              <th>Notes</th>
+              <th class="select-col">
+                <input type="checkbox" id="select-all" title="Select every row matching the current filter">
+              </th>
+              <th class="sortable" data-sort="concept">Concept<span class="sort-ind"></span></th>
+              <th class="sortable" data-sort="subconcept">Sub-concept<span class="sort-ind"></span></th>
+              <th class="sortable" data-sort="book">Book<span class="sort-ind"></span></th>
+              <th class="sortable" data-sort="page">Page<span class="sort-ind"></span></th>
+              <th class="sortable" data-sort="notes">Notes<span class="sort-ind"></span></th>
               <th></th>
             </tr>
           </thead>

@@ -51,11 +51,12 @@ def letter_of(concept):
     return c if re.match(r"[A-Z]", c) else "#"
 
 
-def page_sort_key(page):
-    m = re.match(r"^\s*(\d+)", page or "")
+def natural_sort_key(value):
+    """Numbers first, in numeric order ("9" before "10"), then everything else."""
+    m = re.match(r"^\s*(\d+)", value or "")
     if m:
-        return (0, int(m.group(1)), page or "")
-    return (1, 0, (page or "").lower())
+        return (0, int(m.group(1)), value or "")
+    return (1, 0, (value or "").lower())
 
 
 def sorted_for_pdf(entries):
@@ -64,7 +65,9 @@ def sorted_for_pdf(entries):
         key=lambda e: (
             (e.get("concept") or "").lower(),
             (e.get("subconcept") or "").lower(),
-            page_sort_key(e.get("page")),
+            # Book before page, so refs read in book order (1:4, 1:14, 2:74).
+            natural_sort_key(e.get("book")),
+            natural_sort_key(e.get("page")),
         ),
     )
 

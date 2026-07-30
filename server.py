@@ -112,11 +112,12 @@ def write_entries(entries):
             writer.writerow({k: e.get(k, "") for k in FIELDS})
 
 
-def page_sort_key(page):
-    m = re.match(r"^\s*(\d+)", page or "")
+def natural_sort_key(value):
+    """Numbers first, in numeric order ("9" before "10"), then everything else."""
+    m = re.match(r"^\s*(\d+)", value or "")
     if m:
-        return (0, int(m.group(1)), page or "")
-    return (1, 0, (page or "").lower())
+        return (0, int(m.group(1)), value or "")
+    return (1, 0, (value or "").lower())
 
 
 def sorted_entries(entries):
@@ -125,7 +126,10 @@ def sorted_entries(entries):
         key=lambda e: (
             (e.get("concept") or "").lower(),
             (e.get("subconcept") or "").lower(),
-            page_sort_key(e.get("page")),
+            # Book before page: a concept's references should read in book order
+            # (1:4, 1:14, 2:74), not interleaved by page number across books.
+            natural_sort_key(e.get("book")),
+            natural_sort_key(e.get("page")),
         ),
     )
 
@@ -355,6 +359,9 @@ class Handler(BaseHTTPRequestHandler):
                 sources = write_sources(raw)
             self._send_json({"sources": sources})
             return
+        if path == "/api/entries/subconcept":
+            self._bulk_set_subconcept()
+            return
         if path != "/api/entries":
             self.send_response(404)
             self.end_headers()
@@ -393,6 +400,37 @@ class Handler(BaseHTTPRequestHandler):
             regenerate_markdown(entries)
             meta = build_meta(entries)
         self._send_json({"entry": entry, "meta": meta}, 201)
+
+    def _bulk_set_subconcept(self):
+        """Set (or, with an empty value, clear) the sub-concept on many entries at once.
+
+        One CSV write and one INDEX.md regeneration for the whole batch — the point
+        is labelling a block of imported references without a request per row.
+        """
+        data = self._read_json_body()
+        ids = data.get("ids")
+        if not isinstance(ids, list) or not ids:
+            self._send_json({"error": "ids must be a non-empty list"}, 400)
+            return
+        subconcept = (data.get("subconcept") or "").strip()
+        wanted = {str(i) for i in ids}
+        with lock:
+            entries = load_entries()
+            known = {e.get("id") for e in entries}
+            missing = sorted(wanted - known)
+            if missing:
+                self._send_json({"error": f"unknown entry ids: {', '.join(missing)}"}, 404)
+                return
+            updated = 0
+            for e in entries:
+                if e.get("id") in wanted and (e.get("subconcept") or "") != subconcept:
+                    e["subconcept"] = subconcept
+                    updated += 1
+            if updated:
+                write_entries(entries)
+                regenerate_markdown(entries)
+            meta = build_meta(entries)
+        self._send_json({"updated": updated, "requested": len(wanted), "meta": meta})
 
     def do_PUT(self):
         path = urlparse(self.path).path
