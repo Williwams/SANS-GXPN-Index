@@ -17,7 +17,7 @@ import re
 import sys
 import threading
 from datetime import datetime
-from http.server import HTTPServer, BaseHTTPRequestHandler
+from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse
 
 try:
@@ -512,7 +512,12 @@ def main():
     ensure_csv()
     with lock:
         regenerate_markdown(load_entries())
-    server = HTTPServer(("127.0.0.1", port), Handler)
+    # Threaded, not the plain HTTPServer: browsers open speculative connections and
+    # send nothing on them, which blocks a single-threaded server's accept loop
+    # indefinitely — the whole app appears to hang. Threads keep it responsive, and
+    # the shared `lock` already guards every read/write of the CSV.
+    server = ThreadingHTTPServer(("127.0.0.1", port), Handler)
+    server.daemon_threads = True
     print(f"GXPN Study Index running at http://127.0.0.1:{port}")
     print(f"Data file: {CSV_PATH}")
     print(f"Markdown index: {MD_PATH}")

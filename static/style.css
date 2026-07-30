@@ -33,6 +33,38 @@ header {
 
 header h1 { font-size: 1.15rem; margin: 0; letter-spacing: 0.02em; }
 .stats { color: var(--muted); font-size: 0.85rem; }
+/* ---------- annotation progress, along the header ---------- */
+.progress { flex: 1; min-width: 180px; max-width: 34rem; margin-left: auto; }
+.progress-labels {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.25rem;
+  font-size: 0.72rem;
+  color: var(--accent-2);
+  white-space: nowrap;
+}
+.progress-labels .muted { color: var(--muted); }
+.progress-track {
+  position: relative;
+  height: 7px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  border-radius: 6px;
+  transition: width 400ms ease;
+}
+
+@media (max-width: 720px) {
+  header { flex-wrap: wrap; }
+  .progress { flex-basis: 100%; max-width: none; margin-left: 0; }
+}
+
 .logo {
   width: 28px;
   height: 28px;
@@ -397,6 +429,18 @@ button.small { padding: 0.3rem 0.6rem; font-size: 0.75rem; }
   min-height: 1.9rem;
 }
 .toolbar-left { display: flex; align-items: center; flex-wrap: wrap; gap: 0.35rem 0.75rem; }
+.check-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.check-inline:hover { color: var(--text); }
+.check-inline input { margin: 0; cursor: pointer; }
+.check-inline input:checked + span { color: var(--accent); }
 #collapse-panels-btn { float: none; }
 #collapse-panels-btn.hidden { display: none; }
 

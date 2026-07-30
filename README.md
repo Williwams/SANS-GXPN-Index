@@ -21,7 +21,9 @@ python3 server.py        # defaults to port 8765
 python3 server.py 9000    # or pick a port
 ```
 
-Open http://127.0.0.1:8765 in a browser.
+Open http://127.0.0.1:8765 in a browser. The server is threaded — browsers open
+speculative connections and send nothing on them, which wedges a single-threaded
+Python HTTP server until it's killed.
 
 ## Import an existing index
 
@@ -58,6 +60,12 @@ that appears first.
   still add it anyway if it's intentional (e.g. two separate notes on the same page).
   Same concept with a *different* page/book is not a duplicate — that's just another
   reference, and it stacks under the same concept in the index.
+- The header tracks how far along you are: **what percent of references carry a note
+  or a sub-concept**, with a bar that fills as you work, plus what percent of concepts
+  have at least one annotated reference. The label rounds; the bar doesn't, so a
+  handful of annotations out of a thousand still nudges it. Hovering gives the raw
+  counts. Excluding an un-annotated reference raises the percentage — pruning counts
+  as progress.
 - Every row in **All entries** carries a small expander next to the concept showing
   how many times that concept appears (`▸ 34`). Click it to open a list, right under
   the row, of **every reference for that concept** — always sorted book → page
@@ -69,6 +77,11 @@ that appears first.
   decide isn't worth keeping, **Edit** loads it into the form, and *select all for
   labelling* pushes the whole concept into the selection for a bulk sub-concept.
   Several lists can be open at once; the toolbar offers to collapse them.
+- **Hide annotated** drops every reference that already has a note or a sub-concept,
+  leaving just what's left to do (the tick-box says how many it's hiding). It stacks
+  with the search box, and rows vanish from the list as you finish them. It does *not*
+  touch the per-concept lists — those still show every reference, which is the point of
+  them. The header percentages always describe the whole index, not the filtered view.
 - Click a column header to sort; click again to reverse. **Shift-click** a second
   header to sort by more than one column — the headers then show their priority
   (`Book ▲1`, `Page ▲2`). Book and Page sort numerically, not alphabetically, so 9

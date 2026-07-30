@@ -506,8 +506,38 @@
     $("markdown-render").innerHTML = renderMarkdown(data.markdown || "_Nothing indexed yet._");
   }
 
+  // A reference counts as annotated once it carries a note or a sub-concept — the
+  // two things an imported page number doesn't come with.
+  function isAnnotated(e) {
+    return !!((e.subconcept || "").trim() || (e.notes || "").trim());
+  }
+
+  function pct(done, total) {
+    return total ? Math.round((done / total) * 100) : 0;
+  }
+
   function renderStats() {
-    $("stats").textContent = `${entries.length} entries · ${meta.concepts.length} concepts`;
+    const total = entries.length;
+    $("stats").textContent = `${total} entries · ${meta.concepts.length} concepts`;
+
+    const done = entries.filter(isAnnotated).length;
+    const concepts = new Set(entries.map((e) => e.concept));
+    const started = new Set(entries.filter(isAnnotated).map((e) => e.concept));
+    const entryPct = pct(done, total);
+    const conceptPct = pct(started.size, concepts.size);
+
+    $("progress-entries").textContent = `${entryPct}% of references annotated (${done}/${total})`;
+    $("progress-concepts").textContent = `${conceptPct}% of concepts started (${started.size}/${concepts.size})`;
+    // Label rounds, the bar doesn't: with ~1000 references a handful of annotations
+    // wouldn't move a rounded width at all, and the point is seeing it creep up.
+    // Floor it so the first annotation is visible, but keep a true zero empty.
+    const exact = total ? (done / total) * 100 : 0;
+    $("progress-fill").style.width = done ? `${Math.max(exact, 0.5).toFixed(2)}%` : "0%";
+    const track = $("progress-track");
+    track.setAttribute("aria-valuenow", String(entryPct));
+    track.title =
+      `${done} of ${total} references have a note or sub-concept\n` +
+      `${started.size} of ${concepts.size} concepts have at least one annotated reference`;
   }
 
   // ---------- table sorting ----------
@@ -719,11 +749,15 @@
     const q = searchInput.value.trim().toLowerCase();
     const body = $("entries-body");
     body.innerHTML = "";
-    const filtered = entries.filter((e) => {
-      if (!q) return true;
-      return [e.concept, e.subconcept, e.book, e.page, e.notes]
-        .some((v) => (v || "").toLowerCase().includes(q));
-    });
+    const matchesSearch = (e) =>
+      !q ||
+      [e.concept, e.subconcept, e.book, e.page, e.notes].some((v) => (v || "").toLowerCase().includes(q));
+    const searched = entries.filter(matchesSearch);
+    // "Hide annotated" leaves only the work still to do. It deliberately does not
+    // reach into the sibling panels — those exist to show what a concept already has.
+    const hiding = hideAnnotatedBox.checked;
+    const filtered = hiding ? searched.filter((e) => !isAnnotated(e)) : searched;
+    renderHideAnnotatedLabel(hiding ? searched.length - filtered.length : 0);
     visible = sortForTable(filtered);
     renderedIds = [];
     for (const e of visible) {
@@ -767,6 +801,17 @@
     expandedRows.clear();
     renderTable();
   });
+
+  // ---------- hide-what's-done filter ----------
+  const hideAnnotatedBox = $("hide-annotated");
+
+  function renderHideAnnotatedLabel(hidden) {
+    $("hide-annotated-label").textContent = hidden
+      ? `Hide annotated (${hidden} hidden)`
+      : "Hide annotated";
+  }
+
+  hideAnnotatedBox.addEventListener("change", renderTable);
 
   // ---------- bulk sub-concept assignment ----------
   const selectedIds = new Set();

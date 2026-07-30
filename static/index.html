@@ -12,6 +12,17 @@
   <img src="/logo.png" alt="" class="logo">
   <h1>GXPN Study Index</h1>
   <div class="stats" id="stats">0 entries &middot; 0 concepts</div>
+  <div class="progress" id="progress">
+    <div class="progress-labels">
+      <span id="progress-entries">0% of references annotated</span>
+      <span id="progress-concepts" class="muted">0% of concepts started</span>
+    </div>
+    <div class="progress-track" id="progress-track"
+         role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"
+         aria-label="References with a note or sub-concept">
+      <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+    </div>
+  </div>
 </header>
 
 <main>
@@ -87,6 +98,10 @@
     <div class="tab-pane" id="tab-table">
       <div class="table-toolbar">
         <div class="toolbar-left">
+          <label class="check-inline" title="Hide every reference that already has a note or a sub-concept, leaving just what's left to do">
+            <input type="checkbox" id="hide-annotated">
+            <span id="hide-annotated-label">Hide annotated</span>
+          </label>
           <div class="sort-status" id="sort-status"></div>
           <button type="button" class="link-btn hidden" id="collapse-panels-btn"></button>
         </div>
