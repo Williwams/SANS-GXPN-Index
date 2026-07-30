@@ -1,4 +1,4 @@
-data/
+data/backups/
 __pycache__/
 *.pyc
 *.docx

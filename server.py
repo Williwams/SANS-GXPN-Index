@@ -511,7 +511,13 @@ def main():
     port = int(sys.argv[1]) if len(sys.argv) > 1 else 8765
     ensure_csv()
     with lock:
-        regenerate_markdown(load_entries())
+        entries = load_entries()
+        if entries or not os.path.exists(MD_PATH):
+            regenerate_markdown(entries)
+        else:
+            # index.csv is empty (e.g. a fresh checkout without the data/ directory)
+            # but INDEX.md already has real content — don't silently clobber it.
+            print(f"Note: {CSV_PATH} has no entries; leaving existing {MD_PATH} untouched.")
     # Threaded, not the plain HTTPServer: browsers open speculative connections and
     # send nothing on them, which blocks a single-threaded server's accept loop
     # indefinitely — the whole app appears to hang. Threads keep it responsive, and
