@@ -2,7 +2,7 @@
 
 _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll be overwritten._
 
-**Entries:** 1037  |  **Concepts:** 220
+**Entries:** 971  |  **Concepts:** 218
 
 ## Table of Contents
 - [/GS](#gs)
@@ -80,7 +80,6 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - [Hot Standby Router Protocol (HSRP)](#hot-standby-router-protocol-hsrp)
 - [HTTP Strict Transport Security (HSTS)](#http-strict-transport-security-hsts)
 - [IDA Pro](#ida-pro)
-- [ifconfig](#ifconfig)
 - [Immunity Debugger](#immunity-debugger)
 - [Initialization Value (IV)](#initialization-value-iv)
 - [IPv6](#ipv6)
@@ -181,7 +180,6 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - [Smashing the Stack](#smashing-the-stack)
 - [sniff()](#sniff)
 - [Sniffer](#sniffer)
-- [socat](#socat)
 - [sockets](#sockets)
 - [Software Restriction Policy (SRP)](#software-restriction-policy-srp)
 - [Source Index (ESI/RSI)](#source-index-esirsi)
@@ -232,14 +230,13 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 
 ## 802.1Q
 - **1:63-67** — 
-- **1:69-71** — 
-- **1:73** — 
-- **1:75** — 
+- **1:69-71** — Attacked by Yersinia
+- **1:75** — vconfig to add VLAN
 
 ## 802.1X
 - **1:33** — Port authentication check
-- **1:57-58** — 
-- **1:60-61** — 
+- **1:57-58** — Network Auth, requiring Supplicant/Port Access Entity, and Auth server
+- **1:60-61** — Layer 2
 - **2:60** — 
 
 ## Accumulator Register (EAX/RAX)
@@ -311,19 +308,15 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - **2:79-80** — 
 
 ## ARP Spoofing
-- **1:81-85** — 
-- **1:102** — 
-- **1:143** — 
+- **1:81-85** — Definition + Example
 - **2:52** — 
 - **3:87** — 
 
 ## Backup Designated Router (BDR)
-- **1:115-116** — 
+- **1:115-116** — Redundancy in OSPF
 
 ## BetterCap
-- **1:80** — 
-- **1:96-98** — 
-- **1:101-102** — 
+- **1:96-98** — Extensible MitM Golang, Caplets
 - **1:150** — 
 - **1:152** — 
 
@@ -339,11 +332,10 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - **4:142** — 
 
 ## Browser Caching
-- **1:91** — 
+- **1:91** — If-Modified-Since
 
 ## Cain
 - **1:42** — Monitoring insecure Captive Portal auth
-- **1:92** — 
 
 ## Canaries
 - **4:15** — 
@@ -361,10 +353,7 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 
 ## Captive Portal
 - **1:37-44** — NAC Implementation, Authentication
-- **1:54** — 
-- **1:56** — 
-- **1:77** — 
-- **1:97** — 
+- **1:77** — Exceptions
 - **1:145** — 
 - **1:159** — 
 ### RFC Standard
@@ -374,7 +363,6 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - **1:46** — Josh Wright, script watches traffic to impersonate auth'd clients to bypass.
 
 ## chunk
-- **1:126** — 
 - **3:136** — 
 - **3:150** — 
 - **4:116** — 
@@ -393,8 +381,8 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - **2:68** — 
 
 ## Cisco Discovery Protocol (CDP)
-- **1:66** — 
-- **1:73-76** — 
+- **1:66** — Attacked by Yersinia
+- **1:73-76** — 60 secs, serves Device ID, SW version, Platform, Port, Native VLAN and VoIP VLAN Reply
 
 ## Code Segment (CS)
 - **3:161** — 
@@ -479,7 +467,6 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 
 ## Debugging
 - **1:11-13** — Discussing vendor and debugging symbols, microsoft offering the only ones.
-- **1:95** — 
 - **2:25** — 
 - **2:139** — 
 - **3:44-47** — 
@@ -520,8 +507,7 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 
 ## Dynamic Host Configuration Protocol (DHCP)
 - **1:41** — Exposed before Captive Portal Auth
-- **1:66** — 
-- **1:76** — 
+- **1:66** — Attacked by Yersinia
 - **2:54** — 
 - **3:75** — 
 - **3:79** — 
@@ -557,11 +543,11 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - **5:111** — 
 
 ## Dynamic Trunking Protocol (DTP)
-- **1:64-69** — 
-- **1:71-72** — 
+- **1:64-69** — Cisco Protocol, Negotiates Trunc and Encap (802.1Q/ISL). Port Meanings
+- **1:71-72** — Example attack
 
 ## Dynamips
-- **1:119** — 
+- **1:119** — Cisco IOS VM
 
 ## DynamoRIO
 - **2:113** — 
@@ -573,10 +559,10 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - **3:140-142** — 
 
 ## EAP Shadow Attack
-- **1:60** — 
+- **1:60** — Impersonating Victim via MAC
 
 ## EAP type
-- **1:57-58** — 
+- **1:57-58** — Captive Portal Auth
 
 ## EAX/RAX
 - **4:9** — 
@@ -615,12 +601,9 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - **4:14** — 
 
 ## Ettercap
-- **1:80** — 
-- **1:84-90** — 
-- **1:92** — 
-- **1:94-99** — 
-- **1:101-102** — 
-- **1:141** — 
+- **1:84-90** — MitM Attack Sample
+- **1:92** — SMB Capture
+- **1:94-99** — Limitations
 - **1:147-148** — 
 - **1:150** — 
 - **1:152-153** — 
@@ -660,7 +643,7 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - **5:56** — 
 
 ## Fuzzing
-- **1:59** — 
+- **1:59** — Wired EAP/MD5
 - **3:1** — 
 - **3:42** — 
 - **3:47-48** — 
@@ -778,9 +761,8 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - **5:64** — 
 
 ## Hot Standby Router Protocol (HSRP)
-- **1:66** — 
-- **1:104-111** — 
-- **1:143** — 
+- **1:66** — Attacked by Yersinia
+- **1:104-111** — Cisco High Availability routers
 
 ## HTTP Strict Transport Security (HSTS)
 - **1:149-150** — 
@@ -790,10 +772,6 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - **1:12** — Disassembler
 - **2:25** — 
 - **2:115** — 
-
-## ifconfig
-- **1:70** — 
-- **1:128** — 
 
 ## Immunity Debugger
 - **4:37** — 
@@ -816,11 +794,7 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - **2:68** — 
 
 ## IPv6
-- **1:84** — 
-- **1:89** — 
-- **1:109** — 
-- **1:122-141** — 
-- **1:143** — 
+- **1:122-141** — Rules
 - **2:131** — 
 - **2:142** — 
 - **3:80** — 
@@ -834,7 +808,7 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 
 ## JavaScript OS Validation
 - **1:48** — NAC
-- **1:54** — 
+- **1:54** — Captive Portal injecting JS
 
 ## kernel32.dll
 - **4:77** — 
@@ -872,8 +846,8 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - **2:122** — 
 
 ## Link State Advertisements (LSAs)
-- **1:113** — 
-- **1:115-116** — 
+- **1:113** — OSPF Shares with adjacent neighbors to share topology
+- **1:115-116** — Participating to learn topology
 
 ## Linker
 - **2:118** — 
@@ -901,8 +875,8 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - **5:67** — 
 
 ## Loki
-- **1:110-111** — 
-- **1:116-119** — 
+- **1:110-111** — Python Infra Attack Tool for Layer 3
+- **1:116-119** — MD5 Attack
 
 ## Low Fragmentation Heap (LFH)
 - **4:92** — 
@@ -922,15 +896,9 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 
 ## MAC address
 - **1:44-47** — Impersonation
-- **1:60-61** — 
-- **1:71** — 
-- **1:81-85** — 
-- **1:100** — 
-- **1:105** — 
-- **1:107** — 
 - **1:109** — 
-- **1:125-126** — 
-- **1:133** — 
+- **1:125-126** — IPv6 included bits
+- **1:133** — IPv6 MitM
 - **2:58** — 
 - **3:84** — 
 - **3:86-87** — 
@@ -956,7 +924,6 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - **5:82** — 
 
 ## Metasploit
-- **1:92** — 
 - **2:83** — 
 - **2:86** — 
 - **2:101** — 
@@ -983,9 +950,7 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - **4:157** — 
 
 ## modprobe
-- **1:70** — 
-- **1:75** — 
-- **1:128** — 
+- **1:70** — loading linux kernel modules
 - **3:89** — 
 
 ## mona.py
@@ -1003,18 +968,10 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 ## Network Access Control (NAC)
 - **1:36-40** — Description and Implementations, Common Solutions, ways to attack
 - **1:47-48** — User Agent, OS Fingerprint, Javascript OS validation
-- **1:50-54** — 
-- **1:57** — 
-- **1:60** — 
-- **1:73** — 
-- **1:79** — 
-- **1:143** — 
+- **1:50-54** — Limits of
 - **3:5** — 
 
 ## Nmap
-- **1:71** — 
-- **1:132** — 
-- **1:137** — 
 - **2:83** — 
 - **2:110** — 
 - **3:72** — 
@@ -1061,10 +1018,7 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - **5:115-116** — 
 
 ## Open Shortest-Path First (OSPF)
-- **1:89** — 
-- **1:104** — 
-- **1:110** — 
-- **1:112-118** — 
+- **1:112-118** — Definition, Interior Gateway Protocol
 - **1:162** — 
 - **1:164** — 
 
@@ -1077,11 +1031,10 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - **2:118** — 
 
 ## OSfuscate
-- **1:51** — 
+- **1:51** — Modify Registry Params for TCP IP (TTL/TCP/MTU/Window Size)
 
 ## p0f
 - **1:50** — Inline Captive Portal method reading stack frames to identify OS
-- **1:53** — 
 
 ## PacketFence
 - **1:40** — Open Source NAC/Captive Portal ZEN appliance
@@ -1268,7 +1221,7 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - **3:128** — 
 
 ## RADIUS
-- **1:57-59** — 
+- **1:57-59** — SSO Auth server
 
 ## RC4
 - **2:7** — 
@@ -1282,12 +1235,11 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 
 ## Request For Comment (RFC) documents
 - **1:15** — Used by programmers for interop with vendors
-- **1:51** — 
-- **1:109** — 
-- **1:113** — 
-- **1:125** — 
-- **1:128** — 
-- **1:133** — 
+- **1:109** — 3768/5798 Standards for Virtual Router Redundancy Protocol
+- **1:113** — 2328 OSPF
+- **1:125** — IPv6
+- **1:128** — IPv6 Optimistic Duplicate Address Detection
+- **1:133** — Neighbor Discovery
 - **1:149** — 
 - **2:19** — 
 - **3:77** — 
@@ -1383,11 +1335,9 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - **3:139-140** — 
 
 ## Scapy
-- **1:52-53** — 
-- **1:59** — 
-- **1:98-99** — 
-- **1:109** — 
-- **1:139** — 
+- **1:52-53** — Send Custom TCP Traffic
+- **1:59** — Used with Sulley for EAP MD5 Fuzzing
+- **1:98-99** — MitM ARP Poisoning
 - **1:162** — 
 - **2:34-35** — 
 - **3:42-43** — 
@@ -1449,7 +1399,6 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 ## Simple Network Management Protocol (SNMP)
 - **1:39** — Configures access to VLANs
 - **1:41** — Attack the Captive Portal
-- **1:85-86** — 
 - **2:142** — 
 
 ## SiteKiosk
@@ -1466,15 +1415,8 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 
 ## Sniffer
 - **1:42** — Cain finding HTTP addresses
-- **1:97** — 
-- **1:111** — 
-- **1:116** — 
 - **3:48** — 
 - **3:87** — 
-
-## socat
-- **1:139** — 
-- **1:141** — 
 
 ## sockets
 - **4:78** — 
@@ -1491,10 +1433,9 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - **4:11** — 
 
 ## Spanning Tree (STP)
-- **1:66** — 
+- **1:66** — Attacked by Yersinia
 
 ## Sslstrip
-- **1:101** — 
 - **1:145-150** — 
 - **1:152-153** — 
 - **1:159** — 
@@ -1540,7 +1481,7 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - **5:135** — 
 
 ## Sulley
-- **1:59** — 
+- **1:59** — Fuzzing framework
 - **3:116-117** — 
 - **3:119** — 
 - **3:121** — 
@@ -1608,8 +1549,7 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - **1:49** — Firefox User Agent Switcher plugin
 
 ## vconfig
-- **1:70-71** — 
-- **1:75** — 
+- **1:70-71** — Linux VLAN Config
 
 ## Virtual Memory
 - **4:4** — 
@@ -1622,7 +1562,7 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - **5:42** — 
 
 ## Virtual Router Redundancy Protocol (VRRP)
-- **1:109** — 
+- **1:109** — Like HSRP, but two+ routers share responsibility for Virtual IP Address
 
 ## VirtualProtect()
 - **5:71-72** — 
@@ -1636,27 +1576,22 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 
 ## VLAN
 - **1:38-39** — Assignment w/ Captive Portal to segment
-- **1:62-77** — 
-- **1:79-80** — 
-- **1:143** — 
+- **1:62-77** — Attacks
 
 ## VLAN Hopping
 - **1:62** — 
-- **1:65** — 
-- **1:71** — 
-- **1:73** — 
-- **1:76** — 
-- **1:79** — 
-- **1:143** — 
+- **1:65** — DTP
+- **1:71** — 802.1Q Trunk
+- **1:73** — Voice VLAN
 
 ## VLAN Manipulation
 - **1:62** — 
 
 ## Voice VLAN
-- **1:73-76** — 
+- **1:73-76** — Voice VLAN Hop
 
 ## voiphopper
-- **1:76** — 
+- **1:76** — Automates Voice VLAN Hop
 
 ## W^X
 - **4:163** — 
@@ -1676,11 +1611,6 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - **5:15** — 
 
 ## Wireshark
-- **1:74** — 
-- **1:82** — 
-- **1:98** — 
-- **1:109** — 
-- **1:114** — 
 - **3:76** — 
 - **3:85** — 
 - **3:110** — 
@@ -1699,8 +1629,6 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - **5:38** — 
 
 ## Yersinia
-- **1:66-69** — 
-- **1:72** — 
-- **1:108-111** — 
-- **1:118** — 
+- **1:66-69** — Multifunction network attack tool exploiting LAN protocols like STP, CDP, DTP, HSRP, DHCP, 802.1Q, VTP, ISL
+- **1:108-111** — HSRP
 - **1:152** —

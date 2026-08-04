@@ -2,12 +2,11 @@ id,concept,subconcept,book,page,notes
 1,/GS,,5,37,
 2,/GS,,5,106,
 3,802.1Q,,1,63-67,
-4,802.1Q,,1,69-71,
-5,802.1Q,,1,73,
-6,802.1Q,,1,75,
+4,802.1Q,,1,69-71,Attacked by Yersinia
+6,802.1Q,,1,75,vconfig to add VLAN
 7,802.1X,,1,33,Port authentication check
-8,802.1X,,1,57-58,
-9,802.1X,,1,60-61,
+8,802.1X,,1,57-58,"Network Auth, requiring Supplicant/Port Access Entity, and Auth server"
+9,802.1X,,1,60-61,Layer 2
 10,802.1X,,2,60,
 11,Accumulator Register (EAX/RAX),,4,9,
 12,Address Space Layout Randomization (ASLR),,2,74,
@@ -63,15 +62,11 @@ id,concept,subconcept,book,page,notes
 62,AppArmor,,2,74,
 63,AppLocker,,2,74-75,
 64,AppLocker,,2,79-80,
-65,ARP Spoofing,,1,81-85,
-66,ARP Spoofing,,1,102,
-67,ARP Spoofing,,1,143,
+65,ARP Spoofing,,1,81-85,Definition + Example
 68,ARP Spoofing,,2,52,
 69,ARP Spoofing,,3,87,
-70,Backup Designated Router (BDR),,1,115-116,
-71,BetterCap,,1,80,
-72,BetterCap,,1,96-98,
-73,BetterCap,,1,101-102,
+70,Backup Designated Router (BDR),,1,115-116,Redundancy in OSPF
+72,BetterCap,,1,96-98,"Extensible MitM Golang, Caplets"
 74,BetterCap,,1,150,
 75,BetterCap,,1,152,
 76,Blowfish,,2,10,
@@ -79,9 +74,8 @@ id,concept,subconcept,book,page,notes
 78,BooFuzz,,3,130-132,
 79,BooFuzz,,3,165,
 80,brk(),,4,142,
-81,Browser Caching,,1,91,
+81,Browser Caching,,1,91,If-Modified-Since
 82,Cain,,1,42,Monitoring insecure Captive Portal auth
-83,Cain,,1,92,
 84,Canaries,,4,15,
 85,Canaries,,4,92,
 86,Canaries,,4,110,
@@ -95,15 +89,11 @@ id,concept,subconcept,book,page,notes
 94,Canaries,,5,106,
 95,Canaries,,5,124,
 96,Captive Portal,,1,37-44,"NAC Implementation, Authentication"
-97,Captive Portal,,1,54,
-98,Captive Portal,,1,56,
-99,Captive Portal,,1,77,
-100,Captive Portal,,1,97,
+99,Captive Portal,,1,77,Exceptions
 101,Captive Portal,,1,145,
 102,Captive Portal,,1,159,
 103,Captive Portal,RFC Standard,1,43,RFC8126
 104,captive portal scam,,1,46,"Josh Wright, script watches traffic to impersonate auth'd clients to bypass."
-105,chunk,,1,126,
 106,chunk,,3,136,
 107,chunk,,3,150,
 108,chunk,,4,116,
@@ -118,8 +108,8 @@ id,concept,subconcept,book,page,notes
 117,Cipher Block Chaining (CBC),,2,37-41,
 118,Cipher Block Chaining (CBC),,2,43-44,
 119,Cipher Block Chaining (CBC),,2,68,
-120,Cisco Discovery Protocol (CDP),,1,66,
-121,Cisco Discovery Protocol (CDP),,1,73-76,
+120,Cisco Discovery Protocol (CDP),,1,66,Attacked by Yersinia
+121,Cisco Discovery Protocol (CDP),,1,73-76,"60 secs, serves Device ID, SW version, Platform, Port, Native VLAN and VoIP VLAN Reply"
 122,Code Segment (CS),,3,161,
 123,Code Segment (CS),,4,5,
 124,Code Segment (CS),,4,7-8,
@@ -180,7 +170,6 @@ id,concept,subconcept,book,page,notes
 179,Data Segment (DS),,5,90,
 180,Data Segment (DS),,5,141,
 181,Debugging,,1,11-13,"Discussing vendor and debugging symbols, microsoft offering the only ones."
-182,Debugging,,1,95,
 183,Debugging,,2,25,
 184,Debugging,,2,139,
 185,Debugging,,3,44-47,
@@ -209,8 +198,7 @@ id,concept,subconcept,book,page,notes
 208,Drcov,,3,161,
 209,Drrun,,3,138-139,
 210,Dynamic Host Configuration Protocol (DHCP),,1,41,Exposed before Captive Portal Auth
-211,Dynamic Host Configuration Protocol (DHCP),,1,66,
-212,Dynamic Host Configuration Protocol (DHCP),,1,76,
+211,Dynamic Host Configuration Protocol (DHCP),,1,66,Attacked by Yersinia
 213,Dynamic Host Configuration Protocol (DHCP),,2,54,
 214,Dynamic Host Configuration Protocol (DHCP),,3,75,
 215,Dynamic Host Configuration Protocol (DHCP),,3,79,
@@ -242,16 +230,16 @@ id,concept,subconcept,book,page,notes
 241,Dynamic Link Libraries (DLLs),,5,81,
 242,Dynamic Link Libraries (DLLs),,5,105,
 243,Dynamic Link Libraries (DLLs),,5,111,
-244,Dynamic Trunking Protocol (DTP),,1,64-69,
-245,Dynamic Trunking Protocol (DTP),,1,71-72,
-246,Dynamips,,1,119,
+244,Dynamic Trunking Protocol (DTP),,1,64-69,"Cisco Protocol, Negotiates Trunc and Encap (802.1Q/ISL). Port Meanings"
+245,Dynamic Trunking Protocol (DTP),,1,71-72,Example attack
+246,Dynamips,,1,119,Cisco IOS VM
 247,DynamoRIO,,2,113,
 248,DynamoRIO,,3,137-140,
 249,DynamoRIO,,3,142-143,
 250,DynamoRIO,,3,161,
 251,dynapstalker,,3,140-142,
-252,EAP Shadow Attack,,1,60,
-253,EAP type,,1,57-58,
+252,EAP Shadow Attack,,1,60,Impersonating Victim via MAC
+253,EAP type,,1,57-58,Captive Portal Auth
 254,EAX/RAX,,4,9,
 255,EAX/RAX,,4,20,
 256,EDX/RDX,,4,9,
@@ -272,12 +260,9 @@ id,concept,subconcept,book,page,notes
 271,ESI/RSI,,4,11,
 272,ESP/RSP,,4,11,
 273,ESP/RSP,,4,14,
-274,Ettercap,,1,80,
-275,Ettercap,,1,84-90,
-276,Ettercap,,1,92,
-277,Ettercap,,1,94-99,
-278,Ettercap,,1,101-102,
-279,Ettercap,,1,141,
+275,Ettercap,,1,84-90,MitM Attack Sample
+276,Ettercap,,1,92,SMB Capture
+277,Ettercap,,1,94-99,Limitations
 280,Ettercap,,1,147-148,
 281,Ettercap,,1,150,
 282,Ettercap,,1,152-153,
@@ -307,7 +292,7 @@ id,concept,subconcept,book,page,notes
 306,Extra Segment (ES),,4,14,
 307,Extra Segment (ES),,4,19,
 308,free(),,5,56,
-309,Fuzzing,,1,59,
+309,Fuzzing,,1,59,Wired EAP/MD5
 310,Fuzzing,,3,1,
 311,Fuzzing,,3,42,
 312,Fuzzing,,3,47-48,
@@ -405,16 +390,13 @@ id,concept,subconcept,book,page,notes
 404,Heap Cookies,,5,35,
 405,Heap Cookies,,5,47,
 406,Heap Spray,,5,64,
-407,Hot Standby Router Protocol (HSRP),,1,66,
-408,Hot Standby Router Protocol (HSRP),,1,104-111,
-409,Hot Standby Router Protocol (HSRP),,1,143,
+407,Hot Standby Router Protocol (HSRP),,1,66,Attacked by Yersinia
+408,Hot Standby Router Protocol (HSRP),,1,104-111,Cisco High Availability routers
 410,HTTP Strict Transport Security (HSTS),,1,149-150,
 411,HTTP Strict Transport Security (HSTS),,1,160,
 412,IDA Pro,,1,12,Disassembler
 413,IDA Pro,,2,25,
 414,IDA Pro,,2,115,
-415,ifconfig,,1,70,
-416,ifconfig,,1,128,
 417,Immunity Debugger,,4,37,
 418,Immunity Debugger,,5,15-16,
 419,Immunity Debugger,,5,18,
@@ -431,11 +413,7 @@ id,concept,subconcept,book,page,notes
 430,Initialization Value (IV),,2,43-48,
 431,Initialization Value (IV),,2,54-61,
 432,Initialization Value (IV),,2,68,
-433,IPv6,,1,84,
-434,IPv6,,1,89,
-435,IPv6,,1,109,
-436,IPv6,,1,122-141,
-437,IPv6,,1,143,
+436,IPv6,,1,122-141,Rules
 438,IPv6,,2,131,
 439,IPv6,,2,142,
 440,IPv6,,3,80,
@@ -445,7 +423,7 @@ id,concept,subconcept,book,page,notes
 444,IV Collision,,2,61,
 445,IV Collision,,2,68,
 446,JavaScript OS Validation,,1,48,NAC
-447,JavaScript OS Validation,,1,54,
+447,JavaScript OS Validation,,1,54,Captive Portal injecting JS
 448,kernel32.dll,,4,77,
 449,kernel32.dll,,4,79-83,
 450,kernel32.dll,,4,86-87,
@@ -469,8 +447,8 @@ id,concept,subconcept,book,page,notes
 468,ldd,,4,152-153,
 469,Library Loading,,2,118-119,
 470,Library Loading,,2,122,
-471,Link State Advertisements (LSAs),,1,113,
-472,Link State Advertisements (LSAs),,1,115-116,
+471,Link State Advertisements (LSAs),,1,113,OSPF Shares with adjacent neighbors to share topology
+472,Link State Advertisements (LSAs),,1,115-116,Participating to learn topology
 473,Linker,,2,118,
 474,Linker,,3,148,
 475,Linker,,4,4,
@@ -490,8 +468,8 @@ id,concept,subconcept,book,page,notes
 489,Loader,,5,5,
 490,Loader,,5,32,
 491,Loader,,5,67,
-492,Loki,,1,110-111,
-493,Loki,,1,116-119,
+492,Loki,,1,110-111,Python Infra Attack Tool for Layer 3
+493,Loki,,1,116-119,MD5 Attack
 494,Low Fragmentation Heap (LFH),,4,92,
 495,Low Fragmentation Heap (LFH),,5,35,
 496,Low Fragmentation Heap (LFH),,5,37,
@@ -502,15 +480,9 @@ id,concept,subconcept,book,page,notes
 501,ltrace,,2,111-114,
 502,MAC,Changing,1,45,"Macshift on windows, Ifconfig on *nix. Most cloud denies"
 503,MAC address,,1,44-47,Impersonation
-504,MAC address,,1,60-61,
-505,MAC address,,1,71,
-506,MAC address,,1,81-85,
-507,MAC address,,1,100,
-508,MAC address,,1,105,
-509,MAC address,,1,107,
 510,MAC address,,1,109,
-511,MAC address,,1,125-126,
-512,MAC address,,1,133,
+511,MAC address,,1,125-126,IPv6 included bits
+512,MAC address,,1,133,IPv6 MitM
 513,MAC address,,2,58,
 514,MAC address,,3,84,
 515,MAC address,,3,86-87,
@@ -524,7 +496,6 @@ id,concept,subconcept,book,page,notes
 523,Message Integrity Check (MIC),,2,27,
 524,Message Integrity Check (MIC),,2,60-62,
 525,Message Integrity Check (MIC),,5,82,
-526,Metasploit,,1,92,
 527,Metasploit,,2,83,
 528,Metasploit,,2,86,
 529,Metasploit,,2,101,
@@ -545,9 +516,7 @@ id,concept,subconcept,book,page,notes
 544,mmap(),,4,142,
 545,mmap(),,4,144,
 546,mmap(),,4,157,
-547,modprobe,,1,70,
-548,modprobe,,1,75,
-549,modprobe,,1,128,
+547,modprobe,,1,70,loading linux kernel modules
 550,modprobe,,3,89,
 551,mona.py,,5,16,
 552,mona.py,,5,137,
@@ -557,16 +526,8 @@ id,concept,subconcept,book,page,notes
 556,Netwide Assembler (NASM),,4,70,
 557,Network Access Control (NAC),,1,36-40,"Description and Implementations, Common Solutions, ways to attack"
 558,Network Access Control (NAC),,1,47-48,"User Agent, OS Fingerprint, Javascript OS validation"
-559,Network Access Control (NAC),,1,50-54,
-560,Network Access Control (NAC),,1,57,
-561,Network Access Control (NAC),,1,60,
-562,Network Access Control (NAC),,1,73,
-563,Network Access Control (NAC),,1,79,
-564,Network Access Control (NAC),,1,143,
+559,Network Access Control (NAC),,1,50-54,Limits of
 565,Network Access Control (NAC),,3,5,
-566,Nmap,,1,71,
-567,Nmap,,1,132,
-568,Nmap,,1,137,
 569,Nmap,,2,83,
 570,Nmap,,2,110,
 571,Nmap,,3,72,
@@ -599,10 +560,7 @@ id,concept,subconcept,book,page,notes
 598,Opcodes,,5,105,
 599,Opcodes,,5,110-111,
 600,Opcodes,,5,115-116,
-601,Open Shortest-Path First (OSPF),,1,89,
-602,Open Shortest-Path First (OSPF),,1,104,
-603,Open Shortest-Path First (OSPF),,1,110,
-604,Open Shortest-Path First (OSPF),,1,112-118,
+604,Open Shortest-Path First (OSPF),,1,112-118,"Definition, Interior Gateway Protocol"
 605,Open Shortest-Path First (OSPF),,1,162,
 606,Open Shortest-Path First (OSPF),,1,164,
 607,openssl,,2,14,
@@ -611,9 +569,8 @@ id,concept,subconcept,book,page,notes
 610,openssl,,2,22-24,
 611,openssl,,2,32,
 612,openssl,,2,118,
-613,OSfuscate,,1,51,
+613,OSfuscate,,1,51,Modify Registry Params for TCP IP (TTL/TCP/MTU/Window Size)
 614,p0f,,1,50,Inline Captive Portal method reading stack frames to identify OS
-615,p0f,,1,53,
 616,PacketFence,,1,40,Open Source NAC/Captive Portal ZEN appliance
 617,Padding Oracle,,2,41,
 618,Padding Oracle,,2,49-50,
@@ -734,7 +691,7 @@ id,concept,subconcept,book,page,notes
 733,PyCrypto,,2,20,
 734,PyDbg,,3,121,
 735,PyDbg,,3,128,
-736,RADIUS,,1,57-59,
+736,RADIUS,,1,57-59,SSO Auth server
 737,RC4,,2,7,
 738,RC4,,2,23,
 739,RC4,,2,25,
@@ -742,12 +699,11 @@ id,concept,subconcept,book,page,notes
 741,readelf,,2,118,
 742,readelf,,4,46,
 743,Request For Comment (RFC) documents,,1,15,Used by programmers for interop with vendors
-744,Request For Comment (RFC) documents,,1,51,
-745,Request For Comment (RFC) documents,,1,109,
-746,Request For Comment (RFC) documents,,1,113,
-747,Request For Comment (RFC) documents,,1,125,
-748,Request For Comment (RFC) documents,,1,128,
-749,Request For Comment (RFC) documents,,1,133,
+745,Request For Comment (RFC) documents,,1,109,3768/5798 Standards for Virtual Router Redundancy Protocol
+746,Request For Comment (RFC) documents,,1,113,2328 OSPF
+747,Request For Comment (RFC) documents,,1,125,IPv6
+748,Request For Comment (RFC) documents,,1,128,IPv6 Optimistic Duplicate Address Detection
+749,Request For Comment (RFC) documents,,1,133,Neighbor Discovery
 750,Request For Comment (RFC) documents,,1,149,
 751,Request For Comment (RFC) documents,,2,19,
 752,Request For Comment (RFC) documents,,3,77,
@@ -821,11 +777,9 @@ id,concept,subconcept,book,page,notes
 820,SafeSEH,,5,124,
 821,Savant,,3,121-122,
 822,Savant,,3,139-140,
-823,Scapy,,1,52-53,
-824,Scapy,,1,59,
-825,Scapy,,1,98-99,
-826,Scapy,,1,109,
-827,Scapy,,1,139,
+823,Scapy,,1,52-53,Send Custom TCP Traffic
+824,Scapy,,1,59,Used with Sulley for EAP MD5 Fuzzing
+825,Scapy,,1,98-99,MitM ARP Poisoning
 828,Scapy,,1,162,
 829,Scapy,,2,34-35,
 830,Scapy,,3,42-43,
@@ -877,7 +831,6 @@ id,concept,subconcept,book,page,notes
 876,Shellcode,,5,143,
 877,Simple Network Management Protocol (SNMP),,1,39,Configures access to VLANs
 878,Simple Network Management Protocol (SNMP),,1,41,Attack the Captive Portal
-879,Simple Network Management Protocol (SNMP),,1,85-86,
 880,Simple Network Management Protocol (SNMP),,2,142,
 881,SiteKiosk,,2,77,
 882,Smashing the Stack,,4,91,
@@ -886,13 +839,8 @@ id,concept,subconcept,book,page,notes
 885,sniff(),,2,35,
 886,sniff(),,3,85-87,
 887,Sniffer,,1,42,Cain finding HTTP addresses
-888,Sniffer,,1,97,
-889,Sniffer,,1,111,
-890,Sniffer,,1,116,
 891,Sniffer,,3,48,
 892,Sniffer,,3,87,
-893,socat,,1,139,
-894,socat,,1,141,
 895,sockets,,4,78,
 896,sockets,,4,84,
 897,sockets,,5,77,
@@ -901,8 +849,7 @@ id,concept,subconcept,book,page,notes
 900,Software Restriction Policy (SRP),,2,81,
 901,Software Restriction Policy (SRP),,2,86,
 902,Source Index (ESI/RSI),,4,11,
-903,Spanning Tree (STP),,1,66,
-904,Sslstrip,,1,101,
+903,Spanning Tree (STP),,1,66,Attacked by Yersinia
 905,Sslstrip,,1,145-150,
 906,Sslstrip,,1,152-153,
 907,Sslstrip,,1,159,
@@ -936,7 +883,7 @@ id,concept,subconcept,book,page,notes
 935,Structured Exception Handling (SEH),,5,103,
 936,Structured Exception Handling (SEH),,5,124,
 937,Structured Exception Handling (SEH),,5,135,
-938,Sulley,,1,59,
+938,Sulley,,1,59,Fuzzing framework
 939,Sulley,,3,116-117,
 940,Sulley,,3,119,
 941,Sulley,,3,121,
@@ -974,8 +921,7 @@ id,concept,subconcept,book,page,notes
 973,User Account Control (UAC),,2,134-135,
 974,User Impersonation,,1,44,Bypassing Captive Portals
 975,User-Agent Impersonation,,1,49,Firefox User Agent Switcher plugin
-976,vconfig,,1,70-71,
-977,vconfig,,1,75,
+976,vconfig,,1,70-71,Linux VLAN Config
 978,Virtual Memory,,4,4,
 979,Virtual Memory,,4,7,
 980,Virtual Memory,,4,14,
@@ -984,7 +930,7 @@ id,concept,subconcept,book,page,notes
 983,Virtual Memory,,5,6,
 984,Virtual Memory,,5,10,
 985,Virtual Memory,,5,42,
-986,Virtual Router Redundancy Protocol (VRRP),,1,109,
+986,Virtual Router Redundancy Protocol (VRRP),,1,109,"Like HSRP, but two+ routers share responsibility for Virtual IP Address"
 987,VirtualProtect(),,5,71-72,
 988,VirtualProtect(),,5,102,
 989,VirtualProtect(),,5,123,
@@ -994,19 +940,14 @@ id,concept,subconcept,book,page,notes
 993,VirtualProtect(),,5,141-146,
 994,VirtualProtect(),,5,148-154,
 995,VLAN,,1,38-39,Assignment w/ Captive Portal to segment
-996,VLAN,,1,62-77,
-997,VLAN,,1,79-80,
-998,VLAN,,1,143,
+996,VLAN,,1,62-77,Attacks
 999,VLAN Hopping,,1,62,
-1000,VLAN Hopping,,1,65,
-1001,VLAN Hopping,,1,71,
-1002,VLAN Hopping,,1,73,
-1003,VLAN Hopping,,1,76,
-1004,VLAN Hopping,,1,79,
-1005,VLAN Hopping,,1,143,
+1000,VLAN Hopping,,1,65,DTP
+1001,VLAN Hopping,,1,71,802.1Q Trunk
+1002,VLAN Hopping,,1,73,Voice VLAN
 1006,VLAN Manipulation,,1,62,
-1007,Voice VLAN,,1,73-76,
-1008,voiphopper,,1,76,
+1007,Voice VLAN,,1,73-76,Voice VLAN Hop
+1008,voiphopper,,1,76,Automates Voice VLAN Hop
 1009,W^X,,4,163,
 1010,W^X,,5,35,
 1011,W^X,,5,38-39,
@@ -1016,11 +957,6 @@ id,concept,subconcept,book,page,notes
 1015,WinDBG,,3,45,
 1016,WinDBG,,4,37,
 1017,WinDBG,,5,15,
-1018,Wireshark,,1,74,
-1019,Wireshark,,1,82,
-1020,Wireshark,,1,98,
-1021,Wireshark,,1,109,
-1022,Wireshark,,1,114,
 1023,Wireshark,,3,76,
 1024,Wireshark,,3,85,
 1025,Wireshark,,3,110,
@@ -1031,8 +967,6 @@ id,concept,subconcept,book,page,notes
 1030,WOW64,,5,81,
 1031,wrpcap(),,3,85,
 1032,XD/ED Bit,,5,38,
-1033,Yersinia,,1,66-69,
-1034,Yersinia,,1,72,
-1035,Yersinia,,1,108-111,
-1036,Yersinia,,1,118,
+1033,Yersinia,,1,66-69,"Multifunction network attack tool exploiting LAN protocols like STP, CDP, DTP, HSRP, DHCP, 802.1Q, VTP, ISL"
+1035,Yersinia,,1,108-111,HSRP
 1037,Yersinia,,1,152,
