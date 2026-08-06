@@ -2,7 +2,7 @@
 
 _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll be overwritten._
 
-**Entries:** 971  |  **Concepts:** 218
+**Entries:** 950  |  **Concepts:** 217
 
 ## Table of Contents
 - [/GS](#gs)
@@ -78,7 +78,6 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - [Heap Cookies](#heap-cookies)
 - [Heap Spray](#heap-spray)
 - [Hot Standby Router Protocol (HSRP)](#hot-standby-router-protocol-hsrp)
-- [HTTP Strict Transport Security (HSTS)](#http-strict-transport-security-hsts)
 - [IDA Pro](#ida-pro)
 - [Immunity Debugger](#immunity-debugger)
 - [Initialization Value (IV)](#initialization-value-iv)
@@ -106,6 +105,7 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - [MemProtect](#memprotect)
 - [Message Integrity Check (MIC)](#message-integrity-check-mic)
 - [Metasploit](#metasploit)
+- [MFA](#mfa)
 - [Mimikatz](#mimikatz)
 - [mmap()](#mmap)
 - [modprobe](#modprobe)
@@ -154,7 +154,6 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - [PSConsoleHostReadline](#psconsolehostreadline)
 - [Pstalker](#pstalker)
 - [PUSHAD](#pushad)
-- [PyCrypto](#pycrypto)
 - [PyDbg](#pydbg)
 - [RADIUS](#radius)
 - [RC4](#rc4)
@@ -317,8 +316,6 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 
 ## BetterCap
 - **1:96-98** — Extensible MitM Golang, Caplets
-- **1:150** — 
-- **1:152** — 
 
 ## Blowfish
 - **2:10** — 
@@ -354,8 +351,6 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 ## Captive Portal
 - **1:37-44** — NAC Implementation, Authentication
 - **1:77** — Exceptions
-- **1:145** — 
-- **1:159** — 
 ### RFC Standard
 - **1:43** — RFC8126
 
@@ -515,7 +510,6 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - **3:110** — 
 
 ## Dynamic Link Libraries (DLLs)
-- **2:20** — 
 - **2:80** — 
 - **2:86** — 
 - **2:93** — 
@@ -572,7 +566,7 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - **4:9** — 
 
 ## Electronic Codebook (ECB)
-- **2:11-15** — 
+- **2:11-15** — All blocks encrypted with same key
 - **2:17-18** — 
 - **2:31** — 
 
@@ -604,10 +598,7 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - **1:84-90** — MitM Attack Sample
 - **1:92** — SMB Capture
 - **1:94-99** — Limitations
-- **1:147-148** — 
-- **1:150** — 
-- **1:152-153** — 
-- **1:159** — 
+- **1:147-148** — sslstrip plugin
 - **2:52** — 
 
 ## Exception Handling
@@ -718,7 +709,6 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - **2:27** — 
 
 ## Heap
-- **1:167** — 
 - **2:74** — 
 - **2:145** — 
 - **3:47** — 
@@ -763,10 +753,6 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 ## Hot Standby Router Protocol (HSRP)
 - **1:66** — Attacked by Yersinia
 - **1:104-111** — Cisco High Availability routers
-
-## HTTP Strict Transport Security (HSTS)
-- **1:149-150** — 
-- **1:160** — 
 
 ## IDA Pro
 - **1:12** — Disassembler
@@ -938,6 +924,9 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - **5:113** — 
 - **5:121** — 
 
+## MFA
+- **1:155-157** — Attacking
+
 ## Mimikatz
 - **2:86** — 
 - **2:98** — 
@@ -1019,11 +1008,9 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 
 ## Open Shortest-Path First (OSPF)
 - **1:112-118** — Definition, Interior Gateway Protocol
-- **1:162** — 
-- **1:164** — 
 
 ## openssl
-- **2:14** — 
+- **2:14** — To simulate an image
 - **2:16** — 
 - **2:20** — 
 - **2:22-24** — 
@@ -1176,7 +1163,6 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - **3:128** — 
 
 ## Product Security Testing
-- **1:166** — 
 - **2:144** — 
 - **3:1** — 
 - **3:4-6** — 
@@ -1213,9 +1199,6 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - **5:150** — 
 - **5:152-154** — 
 
-## PyCrypto
-- **2:20** — 
-
 ## PyDbg
 - **3:121** — 
 - **3:128** — 
@@ -1224,7 +1207,7 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - **1:57-59** — SSO Auth server
 
 ## RC4
-- **2:7** — 
+- **2:7** — Stream Cipher
 - **2:23** — 
 - **2:25** — 
 - **2:56** — 
@@ -1240,7 +1223,6 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - **1:125** — IPv6
 - **1:128** — IPv6 Optimistic Duplicate Address Detection
 - **1:133** — Neighbor Discovery
-- **1:149** — 
 - **2:19** — 
 - **3:77** — 
 - **3:120** — 
@@ -1292,7 +1274,6 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 
 ## Reverse Engineering
 - **1:12** — Slide Defining/core concepts
-- **1:166** — 
 - **2:18** — 
 - **2:30** — 
 - **2:117** — 
@@ -1313,7 +1294,6 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - **5:154-155** — 
 
 ## Ruby
-- **1:152** — 
 - **3:100** — 
 - **3:109** — 
 
@@ -1338,7 +1318,6 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - **1:52-53** — Send Custom TCP Traffic
 - **1:59** — Used with Sulley for EAP MD5 Fuzzing
 - **1:98-99** — MitM ARP Poisoning
-- **1:162** — 
 - **2:34-35** — 
 - **3:42-43** — 
 - **3:72-94** — 
@@ -1436,9 +1415,7 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 - **1:66** — Attacked by Yersinia
 
 ## Sslstrip
-- **1:145-150** — 
-- **1:152-153** — 
-- **1:159** — 
+- **1:145-150** — MitM attack to manipulate HTTP
 
 ## Stack Pivoting
 - **4:122** — 
@@ -1631,4 +1608,3 @@ _Auto-generated from `data/index.csv` by the web UI — don't hand-edit, it'll b
 ## Yersinia
 - **1:66-69** — Multifunction network attack tool exploiting LAN protocols like STP, CDP, DTP, HSRP, DHCP, 802.1Q, VTP, ISL
 - **1:108-111** — HSRP
-- **1:152** —

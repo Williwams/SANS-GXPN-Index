@@ -67,8 +67,6 @@ id,concept,subconcept,book,page,notes
 69,ARP Spoofing,,3,87,
 70,Backup Designated Router (BDR),,1,115-116,Redundancy in OSPF
 72,BetterCap,,1,96-98,"Extensible MitM Golang, Caplets"
-74,BetterCap,,1,150,
-75,BetterCap,,1,152,
 76,Blowfish,,2,10,
 77,BooFuzz,,3,114-128,
 78,BooFuzz,,3,130-132,
@@ -90,8 +88,6 @@ id,concept,subconcept,book,page,notes
 95,Canaries,,5,124,
 96,Captive Portal,,1,37-44,"NAC Implementation, Authentication"
 99,Captive Portal,,1,77,Exceptions
-101,Captive Portal,,1,145,
-102,Captive Portal,,1,159,
 103,Captive Portal,RFC Standard,1,43,RFC8126
 104,captive portal scam,,1,46,"Josh Wright, script watches traffic to impersonate auth'd clients to bypass."
 106,chunk,,3,136,
@@ -204,7 +200,6 @@ id,concept,subconcept,book,page,notes
 215,Dynamic Host Configuration Protocol (DHCP),,3,79,
 216,Dynamic Host Configuration Protocol (DHCP),,3,86,
 217,Dynamic Host Configuration Protocol (DHCP),,3,110,
-218,Dynamic Link Libraries (DLLs),,2,20,
 219,Dynamic Link Libraries (DLLs),,2,80,
 220,Dynamic Link Libraries (DLLs),,2,86,
 221,Dynamic Link Libraries (DLLs),,2,93,
@@ -243,7 +238,7 @@ id,concept,subconcept,book,page,notes
 254,EAX/RAX,,4,9,
 255,EAX/RAX,,4,20,
 256,EDX/RDX,,4,9,
-257,Electronic Codebook (ECB),,2,11-15,
+257,Electronic Codebook (ECB),,2,11-15,All blocks encrypted with same key
 258,Electronic Codebook (ECB),,2,17-18,
 259,Electronic Codebook (ECB),,2,31,
 260,Empire,,2,101,
@@ -263,10 +258,7 @@ id,concept,subconcept,book,page,notes
 275,Ettercap,,1,84-90,MitM Attack Sample
 276,Ettercap,,1,92,SMB Capture
 277,Ettercap,,1,94-99,Limitations
-280,Ettercap,,1,147-148,
-281,Ettercap,,1,150,
-282,Ettercap,,1,152-153,
-283,Ettercap,,1,159,
+280,Ettercap,,1,147-148,sslstrip plugin
 284,Ettercap,,2,52,
 285,Exception Handling,,4,81,
 286,Exception Handling,,5,4-5,
@@ -353,7 +345,6 @@ id,concept,subconcept,book,page,notes
 367,Grsecurity,,2,74,
 368,Grsecurity,,5,58,
 369,Hash Identification,,2,27,
-370,Heap,,1,167,
 371,Heap,,2,74,
 372,Heap,,2,145,
 373,Heap,,3,47,
@@ -392,8 +383,6 @@ id,concept,subconcept,book,page,notes
 406,Heap Spray,,5,64,
 407,Hot Standby Router Protocol (HSRP),,1,66,Attacked by Yersinia
 408,Hot Standby Router Protocol (HSRP),,1,104-111,Cisco High Availability routers
-410,HTTP Strict Transport Security (HSTS),,1,149-150,
-411,HTTP Strict Transport Security (HSTS),,1,160,
 412,IDA Pro,,1,12,Disassembler
 413,IDA Pro,,2,25,
 414,IDA Pro,,2,115,
@@ -561,9 +550,7 @@ id,concept,subconcept,book,page,notes
 599,Opcodes,,5,110-111,
 600,Opcodes,,5,115-116,
 604,Open Shortest-Path First (OSPF),,1,112-118,"Definition, Interior Gateway Protocol"
-605,Open Shortest-Path First (OSPF),,1,162,
-606,Open Shortest-Path First (OSPF),,1,164,
-607,openssl,,2,14,
+607,openssl,,2,14,To simulate an image
 608,openssl,,2,16,
 609,openssl,,2,20,
 610,openssl,,2,22-24,
@@ -660,7 +647,6 @@ id,concept,subconcept,book,page,notes
 702,Processor Registers,,4,59-60,
 703,Processor Registers,,4,100,
 704,Procmon Agent,,3,128,
-705,Product Security Testing,,1,166,
 706,Product Security Testing,,2,144,
 707,Product Security Testing,,3,1,
 708,Product Security Testing,,3,4-6,
@@ -688,11 +674,10 @@ id,concept,subconcept,book,page,notes
 730,PUSHAD,,5,146,
 731,PUSHAD,,5,150,
 732,PUSHAD,,5,152-154,
-733,PyCrypto,,2,20,
 734,PyDbg,,3,121,
 735,PyDbg,,3,128,
 736,RADIUS,,1,57-59,SSO Auth server
-737,RC4,,2,7,
+737,RC4,,2,7,Stream Cipher
 738,RC4,,2,23,
 739,RC4,,2,25,
 740,RC4,,2,56,
@@ -704,7 +689,6 @@ id,concept,subconcept,book,page,notes
 747,Request For Comment (RFC) documents,,1,125,IPv6
 748,Request For Comment (RFC) documents,,1,128,IPv6 Optimistic Duplicate Address Detection
 749,Request For Comment (RFC) documents,,1,133,Neighbor Discovery
-750,Request For Comment (RFC) documents,,1,149,
 751,Request For Comment (RFC) documents,,2,19,
 752,Request For Comment (RFC) documents,,3,77,
 753,Request For Comment (RFC) documents,,3,120,
@@ -746,7 +730,6 @@ id,concept,subconcept,book,page,notes
 789,return-to-libc,,4,161-162,
 790,return-to-libc,,5,105-106,
 791,Reverse Engineering,,1,12,Slide Defining/core concepts
-792,Reverse Engineering,,1,166,
 793,Reverse Engineering,,2,18,
 794,Reverse Engineering,,2,30,
 795,Reverse Engineering,,2,117,
@@ -763,7 +746,6 @@ id,concept,subconcept,book,page,notes
 806,ROP Chain,,5,136,
 807,ROP Chain,,5,138,
 808,ROP Chain,,5,154-155,
-809,Ruby,,1,152,
 810,Ruby,,3,100,
 811,Ruby,,3,109,
 812,Safe Unlinking,,5,35,
@@ -780,7 +762,6 @@ id,concept,subconcept,book,page,notes
 823,Scapy,,1,52-53,Send Custom TCP Traffic
 824,Scapy,,1,59,Used with Sulley for EAP MD5 Fuzzing
 825,Scapy,,1,98-99,MitM ARP Poisoning
-828,Scapy,,1,162,
 829,Scapy,,2,34-35,
 830,Scapy,,3,42-43,
 831,Scapy,,3,72-94,
@@ -850,9 +831,7 @@ id,concept,subconcept,book,page,notes
 901,Software Restriction Policy (SRP),,2,86,
 902,Source Index (ESI/RSI),,4,11,
 903,Spanning Tree (STP),,1,66,Attacked by Yersinia
-905,Sslstrip,,1,145-150,
-906,Sslstrip,,1,152-153,
-907,Sslstrip,,1,159,
+905,Sslstrip,,1,145-150,MitM attack to manipulate HTTP
 908,Stack Pivoting,,4,122,
 909,Stack Pivoting,,5,135,
 910,Stack Pivoting,,5,155,
@@ -969,4 +948,4 @@ id,concept,subconcept,book,page,notes
 1032,XD/ED Bit,,5,38,
 1033,Yersinia,,1,66-69,"Multifunction network attack tool exploiting LAN protocols like STP, CDP, DTP, HSRP, DHCP, 802.1Q, VTP, ISL"
 1035,Yersinia,,1,108-111,HSRP
-1037,Yersinia,,1,152,
+1036,MFA,,1,155-157,Attacking
